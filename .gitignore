@@ -1,0 +1,19 @@
+################################
+## White list based gitignore ##
+################################
+
+# forbidden
+*
+.*
+
+# allowed
+!.gitignore
+!.gitattributes
+!assets/
+!json/
+!*.md
+!LICENSE
+!README
+!*.png
+!*.jpg
+!*.json
