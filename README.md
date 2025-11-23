@@ -1,4 +1,4 @@
-# vscode_wksp_2024
+# VSCode Workshop 2025
 
 ## 目录
 
@@ -8,4 +8,5 @@
 - 扩展推荐
   - [静态代码分析工具sonarqube](sonarqube.md)
   - [code spell checker](spell.md)
+  - [Markdown All in One](markdown.md)
   - [SSH远程连接](ssh.md)
