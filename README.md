@@ -10,3 +10,4 @@
   - [code spell checker](spell.md)
   - [Markdown All in One](markdown.md)
   - [SSH远程连接](ssh.md)
+  - [AI Coding Assistants in VS Code](agent.md)
