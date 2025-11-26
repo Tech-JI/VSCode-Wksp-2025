@@ -15,9 +15,9 @@
 
 ### 2. 学生认证
 
-1. 进行 [学生认证](http://education.github.com/discount_requests/application)（**注意必须关掉梯子!** 否则成功率较低）
+1. 进行 [学生认证](http://education.github.com/discount_requests/application)（**注意必须关闭代理/VPN!** 否则成功率较低，极有可能被秒拒）
 2. 填写 Application 表单
-3. 提供证明：推荐打开交我办，搜索 **本科生在读证明** 和 **学生卡**，放在一起拍照上传
+3. 提供证明：推荐打开交我办，搜索 **本科生在读证明** 和 **学生卡**，放在一起拍照上传（不要开虚拟摄像头）
 4. 等待审核（最快几个小时，通常 1-3 天），注意检查邮箱
 5. 访问 [GitHub Education](https://github.com/education) 确认显示紫色权益
 6. 最后，手动 [订阅 GitHub Pro](https://github.com/settings/copilot/features)
@@ -38,6 +38,9 @@
 
 ### 1. 使用官方 Claude API Key（需要 Anthropic 账户）
 
+**注意**: 官方 API 成本较高，且存在账号封禁风险，不建议新手使用。
+
+**使用步骤**:
 1. 前往 [Anthropic Console](https://console.anthropic.com/) 获取 API Key
 2. 在 VS Code 中配置 API Key（见下方配置方法）
 3. API Provider 选择 `anthropic`
@@ -62,7 +65,145 @@ API Key 是一串唯一的密钥（类似密码），用于验证你的身份并
 
 支持使用 OpenAI 兼容的本地模型（如 Ollama、LM Studio）或第三方服务（如 OpenRouter）。
 
-#### 配置方法一：通过设置界面
+#### 配置方法一：通过终端配置 Claude Code
+
+**1. 安装 Node.js**（已安装可跳过）
+
+确保 Node.js 版本 ≥ 18.0
+
+```bash
+# Ubuntu / Debian 用户
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo bash -
+sudo apt-get install -y nodejs
+node --version
+
+# macOS 用户
+sudo xcode-select --install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install node
+node --version
+```
+
+**2. 安装 Claude Code**
+
+```bash
+npm install -g @anthropic-ai/claude-code
+claude --version
+```
+
+**遇到权限错误？** 如果出现 `EACCES` 或权限不足错误，选择以下方案之一：
+
+<details>
+<summary><b>方案 1：使用 nvm 管理 Node.js（官方推荐）</b></summary>
+
+nvm 是 Node.js 官方推荐的版本管理工具，完全避免权限问题：
+
+```bash
+# 安装 nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# 重新加载配置
+source ~/.zshrc  # 或 source ~/.bashrc
+
+# 安装 Node.js LTS 版本
+nvm install --lts
+nvm use --lts
+
+# 安装 Claude Code
+npm install -g @anthropic-ai/claude-code
+```
+
+**优点**：
+- 可以轻松切换 Node.js 版本
+- 完全在用户目录下，无需 sudo
+- Node.js 社区最推荐的管理方式
+
+</details>
+
+<details>
+<summary><b>方案 2：修改 npm 全局目录（推荐）</b></summary>
+
+不需要 `sudo`，最安全的方式：
+
+```bash
+# 创建全局包目录
+mkdir -p ~/.npm-global
+
+# 设置 npm 全局路径
+npm config set prefix '~/.npm-global'
+
+# 配置 PATH（根据你的 Shell 类型选择）
+# 如果使用 zsh（默认 macOS 和部分 Linux）
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# 如果使用 bash
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+# 重新安装
+npm install -g @anthropic-ai/claude-code
+```
+
+</details>
+
+<details>
+<summary><b>方案 3：使用 sudo（不推荐，但最快）</b></summary>
+
+```bash
+sudo npm install -g @anthropic-ai/claude-code
+```
+
+**注意**：此方法会修改系统目录，可能导致权限混乱，不建议长期使用。
+
+</details>
+
+**3. 初始化配置**
+
+在项目目录下运行：
+
+```bash
+cd your-project-folder
+export ANTHROPIC_AUTH_TOKEN=sk-...
+export ANTHROPIC_BASE_URL=...
+claude
+```
+
+**4. 首次运行配置**
+
+依次完成以下步骤：
+1. 选择你喜欢的主题，按 `Enter`
+2. 确认安全须知，按 `Enter`
+3. 使用默认 Terminal 配置，按 `Enter`
+4. 信任工作目录，按 `Enter`
+
+配置完成后即可开始使用！
+
+
+
+**5. 配置环境变量（推荐）**
+
+为避免每次重复输入，可将环境变量写入配置文件（根据你的 Shell 类型选择 `.bashrc` 或 `.zshrc`，默认为 `.bashrc`）：
+
+```bash
+# 添加环境变量到配置文件
+echo 'export ANTHROPIC_AUTH_TOKEN=sk-...' >> ~/.bashrc
+echo 'export ANTHROPIC_BASE_URL=...' >> ~/.bashrc
+echo 'export ANTHROPIC_AUTH_TOKEN=sk-...' >> ~/.zshrc
+echo 'export ANTHROPIC_BASE_URL=...' >> ~/.zshrc
+```
+
+重启终端后，直接使用：
+
+```bash
+cd your-project-folder
+claude
+```
+
+即可快速启动 Claude Code，无需重复配置环境变量。
+
+
+#### 配置方法二：通过设置界面
 
 1. 打开命令面板（`Ctrl+Shift+P` 或 `Cmd+Shift+P`）
 2. 搜索 **"Claude Code: Settings"** 或 **"Preferences: Open Settings (UI)"**
@@ -75,10 +216,21 @@ API Key 是一串唯一的密钥（类似密码），用于验证你的身份并
    - **Base URL**: 使用自定义端点时填写（如 `http://localhost:11434/v1`）
    - **Model**: 指定模型名称
 
-#### 配置方法二：直接编辑 settings.json
+#### 配置方法三：直接编辑 settings.json
 
 按 `Ctrl+Shift+P` 或 `Cmd+Shift+P`，搜索 **"Preferences: Open User Settings (JSON)"**，添加：
 
+**使用智谱 GLM 模型**:
+```json
+{
+  "claudeCode.apiProvider": "openai-compatible",
+  "claudeCode.apiKey": "your-glm-api-key",
+  "claudeCode.baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+  "claudeCode.model": "glm-4-plus"
+}
+```
+
+**使用本地 Ollama 模型**:
 ```json
 {
   "claudeCode.apiProvider": "openai-compatible",
