@@ -7,8 +7,9 @@
 - [自定义VSCode外观](beautify.md)
 - 扩展推荐
   - [静态代码分析工具sonarqube](sonarqube.md)
-  - [code spell checker](spell.md)
+  - [Code spell checker](spell.md)
   - [Markdown All in One](markdown.md)
   - [SSH远程连接](ssh.md)
   - [AI Coding Assistants in VS Code](agent.md)
   - [Git 扩展与工具](git.md)
+- 如何选择与禁用扩展
